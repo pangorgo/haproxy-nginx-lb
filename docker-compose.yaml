@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend1:
+    image: nginx
+    volumes:
+      - ${PWD}/backend1/:/etc/nginx/
+      - ${PWD}/x509/:/x509/
+    ports: 
+      - "3001:3001"
+  backend2:
+    image: nginx
+    volumes:
+      - ${PWD}/backend2/:/etc/nginx/
+      - ${PWD}/x509/:/x509/
+    ports: 
+      - "3002:3001"
+  proxy:
+    image: nginx
+    volumes:
+      - ${PWD}/proxy:/etc/nginx
+    ports:
+      - "3000:443"
+    links:
+      - backend1
+      - backend2
